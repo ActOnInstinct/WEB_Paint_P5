@@ -1,4 +1,4 @@
-function RectangleTool (){
+function rectangleTool (){
     this.icon =  "assets/rectangle.jpg";
     this.name = "Rectangle"
 
@@ -8,9 +8,8 @@ function RectangleTool (){
     var rectHeight = 0;
     var drawing = false;
     var optionsDiv = select(".options");
-    var fillOption = noFill();
     var thicknessSlider = createSlider(1, 20, 1, 1);
-    var isFilled;
+    var fillT = new FillTool();
 
     var self = this;
 
@@ -32,8 +31,7 @@ function RectangleTool (){
                 updatePixels();
                 rectWidth = mouseX - startMouseX;
                 rectHeight = mouseY - startMouseY;
-                //apply fill or no fill
-                fillOption;
+                fillT.colorCheck();
                 rect(startMouseX, startMouseY, rectWidth, rectHeight);
             }
         }
@@ -51,13 +49,12 @@ function RectangleTool (){
 		updatePixels();
 		//clear options
 		select(".options").html("");
+        strokeWState = 1;
 	};
 
     this.populateOptions = function() {
         //create a slider for thickness of line and a button to fill the shape
         //and assign slider and button to options bar div
-        isFilled = false;
-
 		select(".options").html(
 			"<button id='fillButton'>Fill</button>");
         select(".options").html("<br/>", true);
@@ -66,19 +63,7 @@ function RectangleTool (){
         select(".options").html("<br/>", true);
         thicknessSlider.parent(optionsDiv);
 
-		select("#fillButton").mouseClicked(function() {
-			var button = select("#" + this.elt.id);
-			if (isFilled == false) {
-				fillOption = fill(colourP.selectedColour);
-				button.html('No Fill');
-                isFilled = true;
-			} 
-            else {
-				fillOption = noFill();
-				button.html('Fill');
-                isFilled = false;
-			}
-		}); 
+        fillT.fillCheck();
 
 	};
 }

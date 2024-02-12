@@ -8,8 +8,8 @@ function EllipseTool (){
     var ellipseHeight = 0;
     var drawing = false;
     var optionsDiv = select(".options");
-    var fillOption = noFill();
     var thicknessSlider = createSlider(1, 20, 1, 1);
+    var fillT = new FillTool();
 
     var self = this;
 
@@ -31,7 +31,7 @@ function EllipseTool (){
                 updatePixels();
                 ellipseWidth = (mouseX - startMouseX);
                 ellipseHeight = (mouseY - startMouseY);
-                fillOption;
+                fillT.colorCheck();
                 ellipse(startMouseX + (ellipseWidth/2), startMouseY + (ellipseHeight/2), ellipseWidth, ellipseHeight);
             }
         }
@@ -64,21 +64,7 @@ function EllipseTool (){
         select(".options").html("<br/>", true);
         thicknessSlider.parent(optionsDiv);
 
-		select("#fillButton").mouseClicked(function() {
-			var button = select("#" + this.elt.id);
-			if (isFilled == false) {
-				fillOption = fill(colourP.selectedColour);
-				button.html('No Fill');
-                isFilled = true;
-                fillState = true;
-			} 
-            else {
-				fillOption = noFill();
-				button.html('Fill');
-                isFilled = false;
-                fillState = false;
-			}
-		});        
+        fillT.fillCheck();
 
 	};  
 }
