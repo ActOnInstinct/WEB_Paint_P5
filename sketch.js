@@ -27,7 +27,7 @@ function setup() {
 	toolbox.addTool(new LineToTool());
 	toolbox.addTool(new SprayCanTool());
 	toolbox.addTool(new mirrorDrawTool());
-	toolbox.addTool(new RectangleTool());
+	toolbox.addTool(new rectangleTool());
 	toolbox.addTool(new EllipseTool());
 
 	strokeWeight(strokeWState);

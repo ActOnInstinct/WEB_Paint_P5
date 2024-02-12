@@ -20,9 +20,7 @@ function ColourPalette() {
 
 		//set the selected colour and fill and stroke
 		self.selectedColour = c;
-		if (fillState){
-			fill(c);
-		}
+		// fill(c)
 		stroke(c);
 
 		//add a new border to the selected colour
