@@ -24,7 +24,6 @@ function FillTool(){
     //this is needed because the fillCheck only applies color when pressing the button
     //and has no way to know that colourPalette.js has changed the colour in real time
     this.colorCheck = function(){
-        console.log("isFilled is: " + isFilled);
         if(isFilled == true){
             fillOption = fill(colourP.selectedColour);     
         }

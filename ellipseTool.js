@@ -2,18 +2,22 @@ function EllipseTool (){
     this.icon =  "assets/ellipse.jpg";
     this.name = "Ellipse"
 
+    //initial mouse coordinates are stored here (coordinates of the rectangle)
     var startMouseX = -1;
     var startMouseY = -1;
+    //variables to store ellipse width/height
     var ellipseWidth = 0;
     var ellipseHeight = 0;
     var drawing = false;
+    //set up the options panel and create a slider object to control line thickness
     var optionsDiv = select(".options");
     var thicknessSlider = createSlider(1, 20, 1, 1);
+    //create a fill tool object to control fill state
     var fillT = new FillTool();
 
-    var self = this;
 
     this.draw = function(){
+        //update the stroke state from thickness slider value
         strokeWState = thicknessSlider.value();
         strokeWeight(strokeWState);
         //draw a ellipse while the mouse button is being held
@@ -31,6 +35,7 @@ function EllipseTool (){
                 updatePixels();
                 ellipseWidth = (mouseX - startMouseX);
                 ellipseHeight = (mouseY - startMouseY);
+                //set the fill state before drawing
                 fillT.colorCheck();
                 ellipse(startMouseX + (ellipseWidth/2), startMouseY + (ellipseHeight/2), ellipseWidth, ellipseHeight);
             }
@@ -63,7 +68,7 @@ function EllipseTool (){
         select(".options").html("<small>Thickness</small>", true);
         select(".options").html("<br/>", true);
         thicknessSlider.parent(optionsDiv);
-
+        //check fill button status (fill or no fill) and update fill function
         fillT.fillCheck();
 
 	};  

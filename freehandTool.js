@@ -10,7 +10,14 @@ function FreehandTool(){
 	var previousMouseX = -1;
 	var previousMouseY = -1;
 
+	//set up the options panel and create a slider object to control line thickness
+	var optionsDiv = select(".options");
+    var thicknessSlider = createSlider(1, 20, 1, 1);
+
 	this.draw = function(){
+		//update the stroke state from thickness slider value
+		strokeWState = thicknessSlider.value();
+        strokeWeight(strokeWState);
 		//if the mouse is pressed
 		if(mouseIsPressed){
 			//check if they previousX and Y are -1. set them to the current
@@ -34,5 +41,22 @@ function FreehandTool(){
 			previousMouseX = -1;
 			previousMouseY = -1;
 		}
+	};
+
+	this.unselectTool = function() {
+		//clear options
+		select(".options").html("");
+        strokeWState = 1;
+	};
+
+	this.populateOptions = function() {
+        //create a slider for thickness of line and a button to fill the shape
+        //and assign slider and button to options bar div
+
+        select(".options").html("<br/>", true);
+        select(".options").html("<br/>", true);
+        select(".options").html("<small>Thickness</small>", true);
+        select(".options").html("<br/>", true);
+        thicknessSlider.parent(optionsDiv);
 	};
 }

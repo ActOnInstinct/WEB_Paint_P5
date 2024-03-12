@@ -1,18 +1,17 @@
 //global variables that will store the toolbox colour palette
-//amnd the helper functions and global fill/strokeWeight
+//and the helper functions and global fill/strokeWeight
+//and the canvas object
 var toolbox = null;
 var colourP = null;
 var helpers = null;
 var strokeWState = null;
+var c = null;
 
 
 function setup() {
-	//fill is false by default, stroke is 1 by default
-	var strokeWState = 1;
-
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#content');
-	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+	c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent("content");
 
 	//create helper functions and the colour palette
@@ -29,6 +28,8 @@ function setup() {
 	toolbox.addTool(new mirrorDrawTool());
 	toolbox.addTool(new rectangleTool());
 	toolbox.addTool(new EllipseTool());
+	toolbox.addTool(new cropTool());
+	toolbox.addTool(new bucketFillTool());
 
 	strokeWeight(strokeWState);
 	background(255);
@@ -41,7 +42,17 @@ function draw() {
 	//if there isn't a draw method the app will alert the user
 	if (toolbox.selectedTool.hasOwnProperty("draw")) {
 		toolbox.selectedTool.draw();
+		//default fps of 60 causes the mousePressed to be activated at least 2 times and crashes the bucket fill
+		//this lowers the framerate as a work-around
 	} else {
 		alert("it doesn't look like your tool has a draw method!");
+	}
+}
+
+//this function is used by the bucket fill, so that it will activate only once
+//(calling mouseIsPressed in draw() causes it to activate more than once and crash)
+function mousePressed(){
+	if (toolbox.selectedTool.hasOwnProperty("bucketColour")){
+		toolbox.selectedTool.onMouseClick();
 	}
 }

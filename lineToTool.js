@@ -9,8 +9,15 @@ function LineToTool(){
 	var startMouseY = -1;
 	var drawing = false;
 
+	//set up the options panel and create a slider object to control line thickness
+	var optionsDiv = select(".options");
+    var thicknessSlider = createSlider(1, 20, 1, 1);
+
 	//draws the line to the screen 
 	this.draw = function(){
+		//update the stroke state from thickness slider value
+		strokeWState = thicknessSlider.value();
+		strokeWeight(strokeWState);
 		//only draw when mouse is clicked
 		if(mouseIsPressed){
 			//if it's the start of drawing a new line
@@ -42,5 +49,20 @@ function LineToTool(){
 		}
 	};
 
+	this.unselectTool = function() {
+		//clear options
+		select(".options").html("");
+        strokeWState = 1;
+	};
 
+	this.populateOptions = function() {
+        //create a slider for thickness of line and a button to fill the shape
+        //and assign slider and button to options bar div
+
+        select(".options").html("<br/>", true);
+        select(".options").html("<br/>", true);
+        select(".options").html("<small>Thickness</small>", true);
+        select(".options").html("<br/>", true);
+        thicknessSlider.parent(optionsDiv);
+	};
 }
